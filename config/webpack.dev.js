@@ -16,6 +16,15 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: "babel-loader"
+          }
+        ]
+      },
+      {
         test: /\.css$/,
         use: [
           { loader: "style-loader" },
@@ -46,7 +55,6 @@ module.exports = {
           {
             loader: "html-loader",
             options: {
-              interpolate: true,
               attrs: ["img:src"]
             }
           }
