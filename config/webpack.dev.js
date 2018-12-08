@@ -12,5 +12,16 @@ module.exports = {
   },
   devServer: {
     contentBase: "build"
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          { loader: "style-loader" },
+          { loader: "css-loader" }
+        ]
+      }
+    ]
   }
 };
