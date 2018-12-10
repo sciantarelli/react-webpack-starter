@@ -32,18 +32,23 @@ module.exports = {
           }
         ]
       },
-      {
-        test: /\.css$/,
-        use: [
-          { loader: "style-loader" },
-          { loader: "css-loader" }
-        ]
-      },
+      // {
+      //   test: /\.css$/,
+      //   use: [
+      //     { loader: "style-loader" },
+      //     { loader: "css-loader" }
+      //   ]
+      // },
       {
         test: /\.sass$/,
         use: [
           { loader: "style-loader" },
-          { loader: "css-loader" },
+          { loader: "css-loader",
+            // query: {
+            //   modules: true,
+            //   localIdentName: "[name]__[local]--[hash:base64:8]"
+            // }
+          },
           { loader: "sass-loader" }
         ]
       },
