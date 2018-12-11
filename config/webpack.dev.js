@@ -4,7 +4,11 @@ const HTMLWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: {
-    main: "./src/main.js"
+    main: [
+      "babel-runtime/regenerator",
+      "webpack-hot-middleware/client?reload=true", // Sent down to the client to setup the websocket connection
+      "./src/main.js"
+    ]
   },
   mode: "development",
   output: {
