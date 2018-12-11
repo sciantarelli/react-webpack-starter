@@ -4,6 +4,8 @@ const HTMLWebpackPlugin = require("html-webpack-plugin");
 const MiniCSSExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const MinifyPlugin = require("babel-minify-webpack-plugin");
+const CompressionPlugin = require("compression-webpack-plugin");
+const BrotliPlugin = require("brotli-webpack-plugin");
 
 module.exports = env => {
   return {
@@ -15,14 +17,6 @@ module.exports = env => {
       filename: "[name]-bundle.js",
       path: path.resolve(__dirname, "../build"),
       publicPath: "/"
-    },
-    devServer: {
-      contentBase: "build",
-      overlay: true, // Shows errors directly in the browser window
-      hot: true,
-      stats: {
-        colors: true
-      }
     },
     module: {
       rules: [
@@ -74,6 +68,9 @@ module.exports = env => {
       ]
     },
     plugins: [
+      new MiniCSSExtractPlugin({
+        filename: "[name]-[contenthash].css"
+      }),
       new OptimizeCssAssetsPlugin({
         assetNameRegExp: /\.css$/g,
         cssProcessor: require('cssnano'),
@@ -82,18 +79,19 @@ module.exports = env => {
         },
         canPrint: true
       }),
-      new MiniCSSExtractPlugin({
-        filename: "[name]-[contenthash].css"
-      }),
-      new HTMLWebpackPlugin({
-        template: "./src/index.html"
-      }),
       new webpack.DefinePlugin({
         "process.env": {
           NODE_ENV: JSON.stringify(env.NODE_ENV)
         }
       }),
-      new MinifyPlugin()
+      new HTMLWebpackPlugin({
+        template: "./src/index.html"
+      }),
+      new MinifyPlugin(),
+      new CompressionPlugin({
+        algorithm: "gzip"
+      }),
+      new BrotliPlugin()
     ]
   }
 };

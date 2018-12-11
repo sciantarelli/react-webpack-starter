@@ -25,11 +25,18 @@ if (!isProd) {
   console.log("Middleware enabled");
 }
 
-const staticMiddleware = express.static("build");
-server.use(staticMiddleware);
+// const staticMiddleware = express.static("build");
+// server.use(staticMiddleware);
+const expressStaticGzip = require("express-static-gzip");
+
+server.use(
+  expressStaticGzip("build", {
+   enableBrotli: true
+  })
+);
 
 const PORT = 8080;
 
 server.listen(PORT, () => {
   console.log(`Server listening on http://localhost:${PORT}`);
-})
+});
