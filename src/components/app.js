@@ -8,7 +8,8 @@ const App = () => {
         <h1>Some Fractal</h1>
 
         <div>
-          <img src="./images/fractal.jpg" alt="fractal image" />
+          <img src={require("../images/fractal.jpg")}
+               alt="fractal image" />
         </div>
 
         <Counter />
