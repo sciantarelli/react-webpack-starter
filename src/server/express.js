@@ -14,13 +14,13 @@ if (!isProd) {
       config.devServer
   );
 
-  const webpackHotMiddlware = require("webpack-hot-middleware")(
+  const webpackHotMiddleware = require("webpack-hot-middleware")(
       compiler,
       config.devServer
   );
 
   server.use(webpackDevMiddleware);
-  server.use(webpackHotMiddlware);
+  server.use(webpackHotMiddleware);
 
   console.log("Middleware enabled");
 }
