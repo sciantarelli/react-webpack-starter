@@ -4,21 +4,24 @@ const HTMLWebpackPlugin = require("html-webpack-plugin");
 const WebpackBundleAnalyzer = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = {
+  name: 'client',
   entry: {
+    vendor: ["react", "react-dom"],
     main: [
+      "react-hot-loader/patch",
       "babel-runtime/regenerator",
-      "webpack-hot-middleware/client?reload=true", // Sent down to the client to setup the websocket connection
+      "webpack-hot-middleware/client?reload=true",
       "./src/main.js"
     ]
   },
   mode: "development",
   output: {
     filename: "[name]-bundle.js",
-    path: path.resolve(__dirname, "../build"),
+    path: path.resolve(__dirname, "../dist"),
     publicPath: "/"
   },
   devServer: {
-    contentBase: "build",
+    contentBase: "dist",
     overlay: true, // Shows errors directly in the browser window
     hot: true,
     stats: {
@@ -83,11 +86,11 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new HTMLWebpackPlugin({
-      template: "./src/index.html"
-    }),
-    new WebpackBundleAnalyzer({
-      generateStatsFile: true
-    })
+    // new HTMLWebpackPlugin({
+    //   template: "./src/index.html"
+    // }),
+    // new WebpackBundleAnalyzer({
+    //   generateStatsFile: true
+    // })
   ]
 };
