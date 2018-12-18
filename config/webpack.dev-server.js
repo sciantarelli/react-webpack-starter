@@ -1,14 +1,15 @@
 const path = require("path");
 const webpack = require("webpack");
-const nodeExternals = require("webpack-node-externals");
+const externals = require("./node-externals");
 
 module.exports = {
   name: 'server',
   target: "node", // Tells webpack we're using Node for the final output
-  externals: nodeExternals(), // Everything in node_modules should be skipped
+  externals, // Everything in node_modules should be skipped, mostly (see node-externals config file)
   entry: "./src/server/render.js", // Not sure why this should be changed to render.js instead of main.js
   output: {
     filename: "dev-server-bundle.js",
+    chunkFilename: "[name].js",
     path: path.resolve(__dirname, "../build"),
     libraryTarget: "commonjs2"
   },
@@ -57,6 +58,9 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.optimize.LimitChunkCountPlugin({
+      maxChunks: 1
+    }),
     new webpack.DefinePlugin({
       "process.env": {
         NODE_ENV: JSON.stringify("development")

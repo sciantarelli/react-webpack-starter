@@ -1,8 +1,9 @@
 import React from 'react';
+import { Switch } from "react-router";
 import { Route, Link } from "react-router-dom";
-import One from "./One";
-import Two from "./Two";
-import Three from "./Three";
+import universal from "react-universal-component";
+
+const UniversalComponent = universal(props => import(`./${props.page}`));
 
 const Routes = () => {
   return (
@@ -13,9 +14,17 @@ const Routes = () => {
         <Link to="/three">Three</Link>
       </div>
 
-      <Route exact path="/" component={One} />
-      <Route exact path="/two" component={Two} />
-      <Route exact path="/three" component={Three} />
+      <Switch>
+        <Route exact path="/">
+          <UniversalComponent page="One" />
+        </Route>
+        <Route exact path="/two">
+          <UniversalComponent page="Two" />
+        </Route>
+        <Route exact path="/three">
+          <UniversalComponent page="Three" />
+        </Route>
+      </Switch>
     </div>
   );
 };

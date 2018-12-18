@@ -1,18 +1,19 @@
 const path = require("path");
 const webpack = require("webpack");
-const nodeExternals = require("webpack-node-externals");
+const externals = require("./node-externals");
 
 module.exports = {
   name: 'server',
   entry: "./src/server/render.js",
   output: {
     filename: "prod-server-bundle.js",
+    chunkFilename: "[name].js",
     path: path.resolve(__dirname, "../build"),
     libraryTarget: "commonjs2"
   },
   mode: "production",
   target: "node", // Tells webpack we're using Node for the final output
-  externals: nodeExternals(), // Everything in node_modules should be skipped
+  externals,
   module: {
     rules: [
       {
